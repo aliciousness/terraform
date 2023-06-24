@@ -1,2 +1,1 @@
-# terraform
-terraform | homer
+# init of terraform repo, will edit later
