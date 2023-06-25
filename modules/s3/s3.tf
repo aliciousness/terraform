@@ -17,7 +17,7 @@ resource "aws_kms_alias" "family-key-alias" {
 ## s3 bucket
 
 resource "aws_s3_bucket" "s3-family-bucket" {
-  bucket                    = "${var.application}-${var.environment}"
+  bucket                    = "family-${var.application}-${var.environment}"
 
 
   tags = {
