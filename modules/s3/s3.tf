@@ -14,10 +14,10 @@ resource "aws_kms_alias" "family-key-alias" {
  name                       = "alias/${var.application}-${var.environment}-bucket-key"
  target_key_id              = aws_kms_key.family-bucket-key.key_id
 }
-## s3 bucket
+## s3 family bucket
 
 resource "aws_s3_bucket" "s3-family-bucket" {
-  bucket                    = "family-${var.application}-${var.environment}"
+  bucket                    = "${var.application}-${var.environment}"
 
 
   tags = {
@@ -51,4 +51,36 @@ resource "aws_s3_bucket_public_access_block" "family-block" {
  block_public_policy        = true
  ignore_public_acls         = true
  restrict_public_buckets    = true
+}
+###########################
+# s3 bucket folders
+
+resource "aws_s3_object" "Media-folder" {
+  bucket = aws_s3_bucket.s3-family-bucket.id
+  key    = "Media/"
+  acl    = "private"
+}
+
+resource "aws_s3_object" "Media-Pictures-folder" {
+  bucket = aws_s3_bucket.s3-family-bucket.id
+  key    = "Media/Pictures/"
+  acl    = "private"
+}
+
+resource "aws_s3_object" "Media-Movies-folder" {
+  bucket = aws_s3_bucket.s3-family-bucket.id
+  key    = "Media/Movies/"
+  acl    = "private"
+}
+
+resource "aws_s3_object" "Media-Other-folder" {
+  bucket = aws_s3_bucket.s3-family-bucket.id
+  key    = "Media/Other/"
+  acl    = "private"
+}
+
+resource "aws_s3_object" "Media-Tv-Shows-folder" {
+  bucket = aws_s3_bucket.s3-family-bucket.id
+  key    = "Media/Tv-Shows/"
+  acl    = "private"
 }

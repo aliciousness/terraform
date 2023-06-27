@@ -2,6 +2,6 @@
 # misc
 #
 application         = "homer"
-environment         = "home-lab"
+environment         = "family"
 terraform_tags      = ["Terraform", "Homer", "terraform/homer/modules"]
 
