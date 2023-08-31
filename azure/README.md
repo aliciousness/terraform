@@ -23,7 +23,7 @@
 
 ### Create blob container
 `az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME`
-##### Get the storage access key and store it as an environment variable `$ACCOUNT_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP_NAME --account-name $STORAGE_ACCOUNT_NAME --query '[0].value' -o tsv) $env:ARM_ACCESS_KEY=$ACCOUNT_KEY`
+##### Get the storage access key and store it as an environment variable `export ACCOUNT_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP_NAME --account-name $STORAGE_ACCOUNT_NAME --query '[0].value' -o tsv) $env:ARM_ACCESS_KEY=$ACCOUNT_KEY`
 
 ---
 
@@ -35,5 +35,6 @@ backend "azurerm" {
     container_name = "tfstate" 
     key = "terraform.tfstate" <--- This will contain a unique name for the terraform stack you're deploying 
     }```json
+
 
 
