@@ -23,3 +23,21 @@ output "acr_token_name" {
     value       = module.acr.acr_token_name
     description = "The name of the token"
 }
+
+output "acr_token_id" {
+    value       = module.acr.acr_token_id
+    description = "Token for Azure Container Registry"
+    sensitive   = true
+}
+
+output "acr_password1" {
+    value       = module.acr.acr_password1
+    description = "The value of password one for the ACR token"
+    sensitive   = true
+}
+
+output "acr_password2" {
+    value       = module.acr.acr_password2
+    description = "The value of password two for the ACR token"
+    sensitive   = true
+}
