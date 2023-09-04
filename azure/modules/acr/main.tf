@@ -27,7 +27,10 @@ resource "azurerm_container_registry_scope_map" "acr" {
   resource_group_name     = azurerm_resource_group.acr.name
   actions = [
     "repositories/repo1/content/read",
-    "repositories/repo1/content/write"
+    "repositories/repo1/content/write",
+    "repositories/repo1/content/delete",
+    "repositories/repo1/metadata/read",
+    "repositories/repo1/metadata/write"
   ]
 }
 
