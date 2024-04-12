@@ -5,12 +5,11 @@
 
 version: 2
 updates:
-  - package-ecosystem: "pip" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "terraform"
+    directory: "/aws" # Directory for AWS Terraform configurations
     schedule:
       interval: "weekly"
-
-  - package-ecosystem: "terraform" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "terraform"
+    directory: "/azure" # Directory for Azure Terraform configurations
     schedule:
       interval: "weekly"
