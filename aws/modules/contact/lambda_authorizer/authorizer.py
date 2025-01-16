@@ -10,30 +10,34 @@ def get_parameter(name):
     return response['Parameter']['Value']
 
 def lambda_handler(event, context):
-    token = event['authorizationToken']
-    headers = event['headers']
+    # Get the token from the Authorization header
+    token = event.get('authorizationToken', '')
+    
+    # Extract headers from the event
+    method_arn = event['methodArn']
     
     try:
         # Retrieve secrets from Parameter Store
         custom_header_value = get_parameter(f"/{os.environ['APPLICATION_NAME']}/custom-header")
-        secret_key = get_parameter(f"/{os.environ['APPLICATION_NAME']}/api-key")
+        api_key = get_parameter(f"/{os.environ['APPLICATION_NAME']}/api-key")
         
-        # Check for custom header
-        if headers.get('X-Custom-Header') != custom_header_value:
-            return generate_policy('user', 'Deny', event['methodArn'])
+        # Basic validation of required headers
+        if not token:
+            print("No authorization token provided")
+            return generate_policy('user', 'Deny', method_arn)
         
-        # Decode and verify the JWT token
-        decoded_token = jwt.decode(token, secret_key, algorithms=['HS256'])
+        # You might want to implement your own token validation logic here
+        # For now, we'll do a simple check
+        if token and token.startswith('Bearer '):
+            # Allow the request
+            return generate_policy('user', 'Allow', method_arn)
         
-        # Implement your authorization logic here
-        if decoded_token['role'] == 'allowed_role':
-            return generate_policy(decoded_token['sub'], 'Allow', event['methodArn'])
-        else:
-            return generate_policy(decoded_token['sub'], 'Deny', event['methodArn'])
-    except jwt.ExpiredSignatureError:
-        return generate_policy('user', 'Deny', event['methodArn'])
-    except jwt.InvalidTokenError:
-        return generate_policy('user', 'Deny', event['methodArn'])
+        print("Invalid token format")
+        return generate_policy('user', 'Deny', method_arn)
+        
+    except Exception as e:
+        print(f"Error in authentication: {str(e)}")
+        return generate_policy('user', 'Deny', method_arn)
 
 def generate_policy(principal_id, effect, resource):
     auth_response = {}

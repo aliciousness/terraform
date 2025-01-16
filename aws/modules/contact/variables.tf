@@ -10,11 +10,6 @@ variable "lambda_timeout" {
   default     = 30
 }
 
-variable "api_gateway_name" {
-  description = "The name of the API Gateway"
-  type        = string
-}
-
 variable "telegram_bot_token" {
   description = "The token for the Telegram bot"
   type        = string
@@ -56,5 +51,5 @@ variable "vpc" {
 variable "custom_header_value" {
   description = "The value for the custom header"
   type        = string
-  default     = "your-custom-header-value"
+  default     = ""
 }

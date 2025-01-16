@@ -16,6 +16,13 @@ def get_parameter(name):
     return response['Parameter']['Value']
 
 def lambda_handler(event, context):
+    cors_headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,x-custom-header',
+        'Access-Control-Allow-Methods': 'OPTIONS,POST',
+        'Access-Control-Allow-Credentials': 'true'
+    }
+    
     try:
         # Retrieve secrets from Parameter Store
         telegram_bot_token = get_parameter(f"/{os.environ['APPLICATION_NAME']}/telegram-bot-token")
@@ -47,13 +54,15 @@ def lambda_handler(event, context):
         
         return {
             'statusCode': 200,
+            'headers': cors_headers,
             'body': json.dumps('Message sent successfully!')
         }
     except Exception as e:
         # Log the error
-        logger.error(f"Error processing contact form submission: {e}")
+        logger.error(f"Error processing contact submission: {e}")
         
         return {
             'statusCode': 500,
+            'headers': cors_headers,
             'body': json.dumps('An error occurred while processing the form submission.')
         }
