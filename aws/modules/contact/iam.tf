@@ -41,12 +41,11 @@ resource "aws_iam_policy" "lambda_policy" {
         Action = [
           "ssm:GetParameter",
           "ssm:GetParameters",
-          "ssm:GetParameterHistory"
+          "ssm:GetParameterByPath"
         ]
         Effect = "Allow"
         Resource = [
-          aws_ssm_parameter.telegram_bot_token_parameter.arn,
-          aws_ssm_parameter.telegram_chat_id_parameter.arn
+          "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter${local.prefix}/*"
         ]
       }
     ]

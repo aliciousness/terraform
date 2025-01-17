@@ -1,7 +1,7 @@
 resource "aws_lambda_function" "lambda" {
   function_name = "${local.name}-lambda"
   handler       = "lambda_function.lambda_handler"
-  runtime       = "python3.8"
+  runtime       = "python3.10"
   role          = aws_iam_role.lambda_role.arn
   filename      = "${path.module}/lambda_function.zip"
   memory_size   = var.memory_size
@@ -12,6 +12,7 @@ resource "aws_lambda_function" "lambda" {
   environment {
     variables = {
       APPLICATION_NAME = var.application
+      SSM_PREFIX       = local.prefix
     }
   }
 }
