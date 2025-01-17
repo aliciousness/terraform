@@ -1,9 +1,5 @@
 output "lambda" {
   value = {
-    authorizer = {
-      function_name = aws_lambda_function.authorizer.function_name
-      arn           = aws_lambda_function.authorizer.arn
-    }
     lambda = {
       function_name = aws_lambda_function.lambda.function_name
       arn           = aws_lambda_function.lambda.arn
@@ -24,8 +20,6 @@ output "custom_header_value" {
 
 output "ssm" {
   value = {
-    api_key_parameter            = aws_ssm_parameter.api_key_parameter.name
-    custom_header_parameter      = aws_ssm_parameter.custom_header_parameter.name
     telegram_bot_token_parameter = aws_ssm_parameter.telegram_bot_token_parameter.name
     telegram_chat_id_parameter   = aws_ssm_parameter.telegram_chat_id_parameter.name
     prefix                       = local.prefix
@@ -34,7 +28,6 @@ output "ssm" {
 
 output "iam" {
   value = {
-    lambda_role     = aws_iam_role.lambda_role.name
-    authorizer_role = aws_iam_role.authorizer_role.name
+    lambda_role = aws_iam_role.lambda_role.name
   }
 }
