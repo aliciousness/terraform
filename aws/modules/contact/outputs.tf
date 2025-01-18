@@ -14,8 +14,19 @@ output "api_gateway" {
   }
 }
 
-output "custom_header_value" {
-  value = var.custom_header_value != "" ? var.custom_header_value : random_password.custom_header_value.result
+output "waf" {
+  value = {
+    enabled     = var.enable_waf
+    web_acl_id  = var.enable_waf ? aws_wafv2_web_acl.api_gateway[0].id : null
+    web_acl_arn = var.enable_waf ? aws_wafv2_web_acl.api_gateway[0].arn : null
+  }
+}
+
+output "cloudwatch" {
+  value = {
+    lambda_log_group      = aws_cloudwatch_log_group.lambda.name
+    api_gateway_log_group = aws_cloudwatch_log_group.api_gateway.name
+  }
 }
 
 output "ssm" {
